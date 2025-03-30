@@ -3993,6 +3993,7 @@ void Ntop::initPing() {
   for (int i = 0; i < num_defined_interfaces; i++) {
     switch (iface[i]->getIfType()) {
       case interface_type_PF_RING:
+      case interface_type_DPDK:
       case interface_type_PCAP: {
         char *name = iface[i]->get_name();
         Ping *p = new (std::nothrow) Ping(name);

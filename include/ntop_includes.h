@@ -401,6 +401,9 @@ using namespace std;
 #ifdef HAVE_PF_RING
 #include "PF_RINGInterface.h"
 #endif
+#ifdef HAVE_DPDK
+#include "DPDKInterface.h"
+#endif
 #include "VirtualHost.h"
 #include "VirtualHostHash.h"
 #include "HTTPstats.h"

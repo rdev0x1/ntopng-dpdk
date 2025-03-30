@@ -210,6 +210,9 @@ using namespace std;
 #ifdef HAVE_PF_RING
 #include "PF_RINGInterface.h"
 #endif
+#ifdef HAVE_DPDK
+#include "DPDKInterface.h"
+#endif
 #ifdef NTOPNG_PRO
 #include "NtopPro.h"
 #ifndef WIN32

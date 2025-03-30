@@ -629,6 +629,7 @@ else
  fi
 fi
 
+
 SNMP_LIB=
 SNMP_INC=
 if test "${with_nedge+set}" != set; then
@@ -867,6 +868,33 @@ fi
 if test $SYSTEM = "Darwin"; then
    MYSQL_LIB=`echo $MYSQL_LIB | sed 's/openssl@1.1/openssl@1.1/g'`
 fi
+
+AC_MSG_CHECKING([for libdpdk using pkg-config])
+PKG_CHECK_EXISTS([libdpdk], [
+  AC_MSG_RESULT([yes])
+
+  # Try locating libl2fwd in ../libl2fwd or ../../libl2fwd
+  L2FWD_HOME=""
+  for dir in ../libl2fwd ../../libl2fwd; do
+    if test -f "$dir/build/libl2fwd.so"; then
+      L2FWD_HOME="$dir"
+      break
+    fi
+  done
+
+  if test -n "$L2FWD_HOME"; then
+    AC_DEFINE([HAVE_DPDK], [1], [DPDK support via libl2fwd])
+    AC_SUBST([L2FWD_HOME], [$L2FWD_HOME])
+    AC_SUBST([L2FWD_LIB], [$L2FWD_HOME/build/libl2fwd.so])
+    AC_SUBST([L2FWD_INC], [-I$L2FWD_HOME])
+    L2FWD_CFLAGS=`pkg-config --cflags libdpdk`
+    AC_SUBST([L2FWD_CFLAGS], [$L2FWD_CFLAGS])
+  else
+    AC_MSG_WARN([libl2fwd not found despite libdpdk being available])
+  fi
+], [
+  AC_MSG_RESULT([no])
+])
 
 PWD=${HERE}
 AC_DEFINE_UNQUOTED(PACKAGE_RELEASE, "r$GIT_RELEASE", [GIT release of this package])

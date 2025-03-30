@@ -929,6 +929,7 @@ typedef enum {
   interface_type_FLOW,
   interface_type_VIEW,
   interface_type_PF_RING,
+  interface_type_DPDK,
   interface_type_NETFILTER,
   interface_type_DIVERT,
   interface_type_DUMMY,

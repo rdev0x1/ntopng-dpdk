@@ -185,6 +185,10 @@ extern "C" {
                                ntop->getNumCPUs());
 #endif
 
+#ifdef HAVE_DPDK
+    DPDKInterface::initAllDPDKInterfaces();
+#endif
+
   affinity = prefs->get_cpu_affinity();
 
   for (int i = 0; i < MAX_NUM_INTERFACE_IDS; i++) {
@@ -268,6 +272,8 @@ extern "C" {
           iface = new (std::nothrow) PF_RINGInterface(ifName);
         }
 #endif
+
+
       }
     } catch (int err) {
       ntop->getTrace()->traceEvent(
